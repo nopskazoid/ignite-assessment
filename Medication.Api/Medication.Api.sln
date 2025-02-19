@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medication.Api", "Medication.Api\Medication.Api.csproj", "{C83E5DBF-8EB3-4647-88F9-3273894A7464}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medication.Api", "Medication.Api\Medication.Api.csproj", "{C83E5DBF-8EB3-4647-88F9-3273894A7464}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medication.Entities", "Medication.Entities\Medication.Entities.csproj", "{45754D06-0E31-40D2-800A-3D7B852D5DA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medication.Entities", "Medication.Entities\Medication.Entities.csproj", "{45754D06-0E31-40D2-800A-3D7B852D5DA6}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{D50FF20B-108C-4040-90D0-CFF05789FC90}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medication.Tests", "Medication.Tests\Medication.Tests.csproj", "{E4024BC0-AE5C-426D-9F79-2EF2CE0185F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{D50FF20B-108C-4040-90D0-CFF05789FC90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D50FF20B-108C-4040-90D0-CFF05789FC90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D50FF20B-108C-4040-90D0-CFF05789FC90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4024BC0-AE5C-426D-9F79-2EF2CE0185F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4024BC0-AE5C-426D-9F79-2EF2CE0185F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4024BC0-AE5C-426D-9F79-2EF2CE0185F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4024BC0-AE5C-426D-9F79-2EF2CE0185F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

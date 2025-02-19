@@ -15,10 +15,10 @@ services:
     image: postgres:latest
     container_name: medication.database
     environment:
-      - POSTGRES_DB=products
+      - POSTGRES_DB=medication
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - ./.containers/products-db:/var/lib/postgresql/data
+      - ./.containers/medication-db:/var/lib/postgresql/data
     ports:
       - 5432:5432

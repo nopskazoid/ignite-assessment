@@ -1,5 +1,6 @@
 ﻿using Medication.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Medication.Api.Data
 {
@@ -18,12 +19,17 @@ namespace Medication.Api.Data
 
         public DbSet<MedicationRequest> MedicationRequests { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Patient>(x =>
             {
                 x.HasData(
-                    new Patient() { Id = 1, FirstName = "Brian", LastName = "Purvis", DateOfBirth = new DateTime(1973, 4, 2) });
+                    new Patient() { Id = 1, FirstName = "Brian", LastName = "Purvis", DateOfBirth = new DateTime(1973, 4, 2).ToUniversalTime() });
             });
 
             modelBuilder.Entity<Clinician>(x =>
