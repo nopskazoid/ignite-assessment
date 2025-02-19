@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  medication.api:
+    image: ${DOCKER_REGISTRY-}medicationapi
+    container_name: medication.api
+    build:
+      context: .
+      dockerfile: Medication.Api/Dockerfile
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+
+  medication.database:
+    image: postgres:latest
+    container_name: medication.database
+    environment:
+      - POSTGRES_DB=products
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/products-db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
