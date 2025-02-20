@@ -18,10 +18,9 @@ namespace Medication.Api.Repositories
             this.context = context;
         }
 
-        public virtual async Task<int> AddAsync(MedicationRequest request)
+        public virtual async Task AddAsync(MedicationRequest request)
         {
             await context.AddAsync(request);
-            return request.Id;
         }
 
         public virtual async Task UpdateAsync(int requestId, DateTime? dateEnded, float? frequency, MedicationRequest.RequestStatus? status)

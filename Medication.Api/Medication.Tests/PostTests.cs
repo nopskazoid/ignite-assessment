@@ -1,4 +1,5 @@
 using AutoFixture;
+using Medication.Api.Contracts;
 using Medication.Api.Controllers;
 using Medication.Api.Repositories;
 using Medication.Entities;
@@ -25,8 +26,7 @@ namespace Medication.Tests
         [Fact]
         public async Task Post_ValidData_ReturnsSuccess()
         {
-            var repositoryMock = new Mock<MedicationRequestRepository>();
-            repositoryMock.Setup(x => x.AddAsync(It.IsAny<MedicationRequest>())).ReturnsAsync(TestId);
+            repositoryMock.Setup(x => x.AddAsync(It.IsAny<MedicationRequest>())).Callback<MedicationRequest>(x => x.Id = TestId);
 
             var  medicationRequest = fixture.Create<MedicationRequest>();
 
@@ -40,20 +40,19 @@ namespace Medication.Tests
             repositoryMock.Verify();
         }
 
-        public async Task Post_NoPatient_ReturnsBadRequest()
+        [Fact]
+        public async Task Post_Exception_ReturnsBadRequest()
         {
+            repositoryMock.Setup(x => x.AddAsync(It.IsAny<MedicationRequest>())).Throws<Exception>();
+            var medicationRequest = fixture.Create<MedicationRequest>();
 
+            var controller = new MedicationRequestController(null, repositoryMock.Object);
+            var result = await controller.Post(medicationRequest);
+            var objectResult = result as ObjectResult;
+            var statusResult = result as BadRequestObjectResult;
+
+            Assert.Equal(400, statusResult?.StatusCode);
+            repositoryMock.VerifyAll();
         }
-
-        public async Task Post_NoClinician_ReturnsBadRequest()
-        {
-
-        }
-
-        public async Task Post_NoMedication_ReturnsBadRequest()
-        {
-
-        }
-
     }
 }

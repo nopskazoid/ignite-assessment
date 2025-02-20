@@ -19,6 +19,9 @@ namespace Medication.Api.Controllers
         }
 
         [HttpGet]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(GetMedicationRequest), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Get(
             MedicationRequest.RequestStatus? status, 
             DateTime? startDate, 
@@ -27,12 +30,7 @@ namespace Medication.Api.Controllers
             try
             {
                 var requests = await repository.GetAsync(status, startDate, endDate);
-                var response = requests.Select(x => new GetMedicationRequest(x)
-                {
-                    CodeName = x.Medication.CodeName,
-                    ClinicianFirstName = x.Clinician.FirstName,
-                    ClinicianLastName = x.Clinician.LastName
-                }).ToList();
+                var response = requests.Select(x => new GetMedicationRequest(x)).ToList();
 
                 return Ok(response);
             }
@@ -43,15 +41,18 @@ namespace Medication.Api.Controllers
         }
 
         [HttpPost]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post([FromBody] MedicationRequest request)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var id = await repository.AddAsync(request);
+                    await repository.AddAsync(request);
                     await repository.SaveChangesAsync();
-                    return Ok(id);
+                    return Ok(request.Id);
                 }
                 else
                 {
@@ -65,6 +66,9 @@ namespace Medication.Api.Controllers
         }
 
         [HttpPatch]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Patch([FromBody] PatchMedicationRequest request)
         {
             try

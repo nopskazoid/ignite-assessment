@@ -29,7 +29,6 @@ namespace Medication.Tests
         [Fact]
         public async Task Patch_ValidData_ReturnsSuccess()
         {
-            var repositoryMock = new Mock<MedicationRequestRepository>();
             repositoryMock.Setup(x => x.UpdateAsync(It.IsAny<int>(), It.IsNotNull<DateTime>(), It.IsNotNull<float>(), It.IsNotNull<MedicationRequest.RequestStatus>()));
 
             var patchRequest = fixture.Create<PatchMedicationRequest>();
@@ -40,6 +39,23 @@ namespace Medication.Tests
             var result = await controller.Patch(patchRequest) as StatusCodeResult;
 
             Assert.Equal(200, result?.StatusCode);
+            repositoryMock.VerifyAll();
+        }
+
+        [Fact]
+        public async Task Patch_Exception_ReturnsBadRequest()
+        {
+            repositoryMock.Setup(x => x.UpdateAsync(It.IsAny<int>(), It.IsNotNull<DateTime>(), It.IsNotNull<float>(), It.IsNotNull<MedicationRequest.RequestStatus>())).Throws<Exception>();
+
+            var patchRequest = fixture.Create<PatchMedicationRequest>();
+            patchRequest.DateEnded = DateTime.UtcNow;
+
+            var controller = new MedicationRequestController(null, repositoryMock.Object);
+
+            var result = await controller.Patch(patchRequest);
+            var statusResult = result as BadRequestObjectResult;
+
+            Assert.Equal(400, statusResult?.StatusCode);
             repositoryMock.VerifyAll();
         }
     }

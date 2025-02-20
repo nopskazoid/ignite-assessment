@@ -13,6 +13,8 @@ namespace Medication.Api.Contracts
 
         public int Id => medicationRequest.Id;
 
+        public int PatientId => medicationRequest.PatientId;
+
         public string Reason => medicationRequest.Reason;
 
         public DateTime DatePrescribed => medicationRequest.DatePrescribed;
@@ -25,10 +27,10 @@ namespace Medication.Api.Contracts
 
         public MedicationRequest.RequestStatus Status => medicationRequest.Status;
 
-        public string CodeName { get; set; } 
+        public string CodeName => medicationRequest.Medication.CodeName;
 
-        public string ClinicianFirstName { get; set; }
+        public string ClinicianFirstName => medicationRequest.Clinician.FirstName;
 
-        public string ClinicianLastName { get; set; }
+        public string ClinicianLastName => medicationRequest.Clinician.LastName;
     }
 }
